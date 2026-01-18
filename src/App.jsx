@@ -8,24 +8,25 @@ const EDF_COLORS = {
   orange: '#FF6B00',
   blue: '#0058A3',
   green: '#00B050',
-  darkBlue: '#003D6D'
+  darkBlue: '#003D6D',
+  darkGreen: '#1B5E20'
 };
 
 // Data for charts (September 2024 to September 2025)
 const CHART_DATA = [
-  { month: 'Sep 24', apprentissage: 50, cafes: 15, bugs: 0, presentations: 0 },
-  { month: 'Oct 24', apprentissage: 0, cafes: 0, bugs: 0, presentations: 0 },
-  { month: 'Nov 24', apprentissage: 20, cafes: 8, bugs: 5, presentations: 0 },
-  { month: 'Déc 24', apprentissage: 0, cafes: 0, bugs: 0, presentations: 0 },
-  { month: 'Jan 25', apprentissage: -1, cafes: 0, bugs: 12, presentations: 1 },
-  { month: 'Fév 25', apprentissage: 35, cafes: 16, bugs: 22, presentations: -2 },
-  { month: 'Mar 25', apprentissage: 0, cafes: 0, bugs: 0, presentations: 2 },
-  { month: 'Avr 25', apprentissage: 86, cafes: 20, bugs: 33, presentations: 2 },
-  { month: 'Mai 25', apprentissage: 97, cafes: 52, bugs: 61, presentations: 2.5 },
-  { month: 'Jun 25', apprentissage: 117, cafes: 36, bugs: 47, presentations: 6 },
-  { month: 'Jul 25', apprentissage: 162, cafes: 23, bugs: 38, presentations: 6.5 },
-  { month: 'Aoû 25', apprentissage: 193, cafes: 17, bugs: 42, presentations: 7 },
-  { month: 'Sep 25', apprentissage: 291, cafes: 10, bugs: 17, presentations: 8 }
+  { month: 'Sep 24', apprentissage: 50, cafes: 15, bugs: 0, presentations: 0, expressions: 1 },
+  { month: 'Oct 24', apprentissage: 0, cafes: 0, bugs: 0, presentations: 0, expressions: 0 },
+  { month: 'Nov 24', apprentissage: 20, cafes: 8, bugs: 5, presentations: 0, expressions: 1 },
+  { month: 'Déc 24', apprentissage: 0, cafes: 0, bugs: 0, presentations: 0, expressions: 0 },
+  { month: 'Jan 25', apprentissage: -1, cafes: 0, bugs: 12, presentations: 1, expressions: 0 },
+  { month: 'Fév 25', apprentissage: 35, cafes: 16, bugs: 22, presentations: -2, expressions: 2 },
+  { month: 'Mar 25', apprentissage: 0, cafes: 0, bugs: 0, presentations: 2, expressions: 0 },
+  { month: 'Avr 25', apprentissage: 86, cafes: 20, bugs: 33, presentations: 2, expressions: 3 },
+  { month: 'Mai 25', apprentissage: 97, cafes: 52, bugs: 61, presentations: 2.5, expressions: 13 },
+  { month: 'Jun 25', apprentissage: 117, cafes: 36, bugs: 47, presentations: 6, expressions: 5 },
+  { month: 'Jul 25', apprentissage: 162, cafes: 23, bugs: 38, presentations: 6.5, expressions: 7 },
+  { month: 'Aoû 25', apprentissage: 193, cafes: 17, bugs: 42, presentations: 7, expressions: 3 },
+  { month: 'Sep 25', apprentissage: 291, cafes: 10, bugs: 17, presentations: 8, expressions: 3 }
 ];
 
 // Header Component
@@ -34,7 +35,7 @@ const Header = () => (
     <h1 className="text-3xl md:text-6xl font-bold mb-4">Merci EDF</h1>
     <p className="text-lg md:text-2xl mb-2">Grand merci à <b>Alexandra</b> et <b>Guillaume</b>!</p>
     <p className="text-base md:text-lg opacity-80">Septembre 2024 - Septembre 2025</p>
-    <p className="text-base md:text-lg opacity-80">Merci aussi à <b>Anne</b>, <b>Lucas</b>, <b>Kalma</b>, <b>Vincenzo</b>, <b>Lise</b> et les OSEs!</p>
+    <p className="text-base md:text-lg opacity-80">Merci aussi à <b>Anne</b>, <b>Lucas</b>, <b>Kalma</b>, <b>Vincenzo</b>, <b>Lise</b>, <b>RemBat</b> et les OSEs!</p>
     <div className="mt-8 text-xs md:text-sm opacity-70">
       ⬇️ Scrolle pour revivre l'aventure ⬇️
     </div>
@@ -78,7 +79,7 @@ const ApprentissageChart = ({ isVisible }) => (
   </div>
 );
 
-// Cafés Chart
+// Cafes Chart
 const CafesChart = ({ isVisible }) => (
   <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
     <div className="w-full p-4 md:p-12 mb-12 bg-white shadow-md border-y border-gray-100">
@@ -93,6 +94,43 @@ const CafesChart = ({ isVisible }) => (
             <YAxis label={{ value: 'Nombre de cafés', angle: -90, position: 'insideLeft' }} />
             <ChartTooltip />
             <Bar dataKey="cafes" fill={EDF_COLORS.blue} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  </div>
+);
+
+// Expressions Chart
+const ExpressionsChart = ({ isVisible }) => (
+  <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+    <div className="w-full p-4 md:p-12 mb-12 bg-white shadow-md border-y border-gray-100">
+      <h3 className="text-xl md:text-3xl font-bold mb-6 text-center flex items-center justify-center gap-2" style={{ color: EDF_COLORS.blue }}>
+        <span className="material-symbols-outlined" style={{
+          fontSize: '1.2em',
+          background: 'linear-gradient(to right, #002395 33%, #fef2f2ff 33%, #ffffff 66%, #ed2939 66%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          display: 'inline-block',
+          verticalAlign: 'middle',
+          backgroundColor: '#757373ff',
+          padding: '4px',
+          borderRadius: '4px',
+          border: '1px solid #6d6c6cff',
+          lineHeight: '1'
+        }}>
+          flag
+        </span>
+        Expressions Françaises Apprises
+      </h3>
+      <div className="h-[300px] md:h-[400px]">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={CHART_DATA}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+            <XAxis dataKey="month" tick={{ fontSize: 12 }} interval={1} />
+            <YAxis label={{ value: 'Nombre d\'expressions', angle: -90, position: 'insideLeft' }} />
+            <ChartTooltip />
+            <Bar dataKey="expressions" fill={EDF_COLORS.darkGreen} />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -154,7 +192,7 @@ const MapComponent = ({ isVisible }) => (
       <div className="relative w-full h-64 md:h-96 bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
         <MapContainer
           center={[48.5, 0]}
-          zoom={8}
+          zoom={7}
           scrollWheelZoom={false}
           style={{ height: '100%', width: '100%', zIndex: 0 }}
         >
@@ -193,7 +231,7 @@ const MapComponent = ({ isVisible }) => (
         </MapContainer>
       </div>
       <p className="text-center mt-4 text-sm md:text-base text-gray-600">
-        Plus de 350 km parcourus entre nos deux sites ! (OpenStreetMap)
+        Plus de 350 km parcourus en train ! (OpenStreetMap)
       </p>
     </div>
   </div>
@@ -225,6 +263,7 @@ export default function App() {
     intro: false,
     apprentissage: false,
     cafes: false,
+    expressions: false,
     bugs: false,
     presentations: false,
     map: false,
@@ -247,7 +286,7 @@ export default function App() {
       }
 
       // Show sections based on scroll position
-      const sections = ['intro', 'apprentissage', 'cafes', 'bugs', 'presentations', 'map', 'conclusion'];
+      const sections = ['intro', 'apprentissage', 'cafes', 'expressions', 'bugs', 'presentations', 'map', 'conclusion'];
       const newVisible = {};
 
       sections.forEach((section, index) => {
@@ -328,6 +367,8 @@ export default function App() {
         <ApprentissageChart isVisible={visibleSections.apprentissage} />
 
         <CafesChart isVisible={visibleSections.cafes} />
+
+        <ExpressionsChart isVisible={visibleSections.expressions} />
 
         <BugsChart isVisible={visibleSections.bugs} />
 
